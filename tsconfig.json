@@ -1,0 +1,27 @@
+{
+	"extends": "./node_modules/gts/tsconfig-google.json",
+	"compilerOptions": {
+		"target": "ES2015",
+		"module": "ESNext",
+		"lib": ["dom", "dom.iterable", "ESNext"],
+		"outDir": "dist",
+		"allowJs": true,
+		"sourceMap": true,
+		"isolatedModules": true,
+		"moduleResolution": "node",
+		"baseUrl": ".",
+
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+
+		/* Type Checking */
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"strict": true
+	},
+	"include": ["src/**/*", "babel.config.js", "webpack.config.js"],
+	"exclude": ["node_modules", "dist/**/*"]
+}
