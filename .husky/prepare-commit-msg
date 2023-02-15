@@ -1,0 +1,22 @@
+#!/bin/sh
+
+COMMIT_EDITMSG=$1
+
+addIssueNumberInBranch() {
+  NAME=$(git branch | grep '*' | sed 's/* //') 
+  DELETE_BRANCH_NAME=`echo $NAME | cut -d '-' -f1`
+  ISSUE_NUMBER=`echo $DELETE_BRANCH_NAME | cut -d '/' -f2`
+  DESCRIPTION=$(git config branch."$NAME".description)
+  echo "[$ISSUE_NUMBER] $(cat $COMMIT_EDITMSG)" > $COMMIT_EDITMSG
+  if [ -n "$DESCRIPTION" ] 
+  then
+     echo "" >> $COMMIT_EDITMSG
+     echo $DESCRIPTION >> $COMMIT_EDITMSG
+  fi 
+}
+
+MERGE=$(cat $COMMIT_EDITMSG|grep -i 'merge'|wc -l)
+
+if [ $MERGE -eq 0 ] ; then
+  addIssueNumberInBranch
+fi
