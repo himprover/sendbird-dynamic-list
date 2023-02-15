@@ -1,0 +1,39 @@
+.dynamic-list {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.dynamic-list > .list {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid black;
+
+  transition: 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.dynamic-list > .list.focus {
+  transform: translateX(40px);
+}
+
+.dynamic-list > .list.focus + .list {
+  transform: translateX(20px);
+}
+
+/*
+	:has() is not supported in most browsers
+	check >> https://caniuse.com/?search=%3Ahas()
+*/
+.dynamic-list > .list:has(+ .focus) {
+  transform: translateX(20px);
+}
+
+.dynamic-list > .list.active {
+}
+
+.dynamic-list > .list > .sequence-text {
+  width: 10%;
+}
+.dynamic-list > .list > .content-text {
+  width: 90%;
+}
