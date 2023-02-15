@@ -1,23 +1,31 @@
 .dynamic-list {
   display: flex;
   flex-direction: column;
-  width: 400px;
 }
 
 .dynamic-list > .list {
+  width: 400px;
+  transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  margin-bottom: 10px;
+}
+
+.dynamic-list > .list > .list-container {
   display: flex;
   flex-direction: row;
-  border: 1px solid black;
 
-  transition: 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  border: 1px solid black;
 }
 
 .dynamic-list > .list.focus {
-  transform: translateX(40px);
+  padding-left: 40px;
 }
 
 .dynamic-list > .list.focus + .list {
-  transform: translateX(20px);
+  padding-left: 20px;
 }
 
 /*
@@ -25,15 +33,15 @@
 	check >> https://caniuse.com/?search=%3Ahas()
 */
 .dynamic-list > .list:has(+ .focus) {
-  transform: translateX(20px);
+  padding-left: 20px;
 }
 
 .dynamic-list > .list.active {
 }
 
-.dynamic-list > .list > .sequence-text {
+.dynamic-list > .list > .list-container > .sequence-text {
   width: 10%;
 }
-.dynamic-list > .list > .content-text {
+.dynamic-list > .list > .list-container > .content-text {
   width: 90%;
 }
