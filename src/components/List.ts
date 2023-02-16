@@ -2,14 +2,9 @@ import './List.css';
 
 import {Background} from './Background';
 import {Element} from './Element';
-import {ListItem} from './ListItem';
+import {ListItem, ListItemProps} from './ListItem';
 
 type ListTagType = 'ul' | 'ol';
-
-interface ListItemProps {
-  sequence: number;
-  content: string;
-}
 
 export class List extends Element {
   activeList: ListItem | undefined;

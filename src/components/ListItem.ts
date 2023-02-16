@@ -1,5 +1,10 @@
 import {Element} from './Element';
 
+export interface ListItemProps {
+  sequence: number;
+  content: string;
+}
+
 export class ListItem extends Element {
   sequence: number;
   content: string;
