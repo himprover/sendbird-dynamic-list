@@ -1,6 +1,6 @@
-import {Element, ElementInitProps} from './element';
+import {Element, ElementInitProps} from './Element';
 
-export class List extends Element {
+export class ListItem extends Element {
   sequence: number;
   content: string;
 
