@@ -1,11 +1,11 @@
-import {Element, ElementInitProps} from './Element';
+import {Element} from './Element';
 
 export class ListItem extends Element {
   sequence: number;
   content: string;
 
-  constructor(sequence: number, content: string, props: ElementInitProps) {
-    super(props);
+  constructor(sequence: number, content: string) {
+    super('li');
     this.setClass('list-item');
     this.sequence = sequence;
     this.content = content;

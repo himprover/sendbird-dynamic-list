@@ -28,7 +28,7 @@ export class List extends Element {
   addList(props: ListItemProps[]) {
     if (this.$) {
       for (const item of props) {
-        const list = new ListItem(item.sequence, item.content, 'li');
+        const list = new ListItem(item.sequence, item.content);
         list.on(
           'focus',
           () => !list.hasClass('focus') && list.addClass('focus')
