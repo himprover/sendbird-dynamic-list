@@ -6,13 +6,13 @@ export class ListItem extends Element {
 
   constructor(sequence: number, content: string, props: ElementInitProps) {
     super(props);
-    this.setClass('list');
+    this.setClass('list-item');
     this.sequence = sequence;
     this.content = content;
 
     // It's only use to style
     const container = new Element('div');
-    container.setClass('list-container');
+    container.setClass('list-item-container');
     this.appendElement(container);
 
     const sequenceText = new Element('span');

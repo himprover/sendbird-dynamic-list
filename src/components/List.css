@@ -1,4 +1,4 @@
-.dynamic-list {
+.list {
   display: flex;
   flex-direction: column;
 }
@@ -6,14 +6,14 @@
 /*
   About default List Style
 */
-.dynamic-list > .list {
+.list > .list-item {
   width: 400px;
   transition: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) padding;
   margin-bottom: 10px;
   background-color: white;
   cursor: pointer;
 }
-.dynamic-list > .list > .list-container {
+.list > .list-item > .list-item-container {
   display: flex;
   flex-direction: row;
 
@@ -24,21 +24,21 @@
   border: 1px solid black;
 }
 
-.dynamic-list > .list > .list-container > .sequence-text {
+.list > .list-item > .list-item-container > .sequence-text {
   width: 10%;
 }
-.dynamic-list > .list > .list-container > .content-text {
+.list > .list-item > .list-item-container > .content-text {
   width: 90%;
 }
 
 /*
   About List Event Style
 */
-.dynamic-list > .list.focus {
+.list > .list-item.focus {
   padding-left: 40px;
 }
 
-.dynamic-list > .list.focus + .list {
+.list > .list-item.focus + .list-item {
   padding-left: 20px;
 }
 
@@ -46,11 +46,11 @@
 	:has() is not supported in most browsers
 	check >> https://caniuse.com/?search=%3Ahas()
 */
-.dynamic-list > .list:has(+ .focus) {
+.list > .list-item:has(+ .focus) {
   padding-left: 20px;
 }
 
-.dynamic-list > .list.active {
+.list > .list-item.active {
   position: fixed;
   width: 50vw;
   height: 50vh;
@@ -62,15 +62,15 @@
   transition: none;
 }
 
-.dynamic-list > .list.active + .list {
+.list > .list-item.active + .list-item {
   padding-left: 20px;
 }
-.dynamic-list > .list:has(+ .active) {
+.list > .list-item:has(+ .active) {
   padding-left: 20px;
   margin-bottom: 63px;
 }
 
-.dynamic-list > .list.active > .list-container {
+.list > .list-item.active > .list-item-container {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -80,11 +80,11 @@
   margin: 0;
 }
 
-.dynamic-list > .list.active > .list-container > .sequence-text {
+.list > .list-item.active > .list-item-container > .sequence-text {
   width: 100%;
   flex-shrink: 0;
 }
-.dynamic-list > .list.active > .list-container > .content-text {
+.list > .list-item.active > .list-item-container > .content-text {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,11 +95,11 @@
 /*
 About List Popup Background Style
 */
-.dynamic-list > .background.on {
+.list > .background.on {
   visibility: visible;
   cursor: pointer;
 }
 
-.dynamic-list > .background.off {
+.list > .background.off {
   visibility: hidden;
 }

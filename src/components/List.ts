@@ -1,4 +1,4 @@
-import './dynamicList.css';
+import './List.css';
 
 import {Background} from './Background';
 import {Element, ElementInitProps} from './Element';
@@ -9,12 +9,12 @@ interface ListItemProps {
   content: string;
 }
 
-export class DynamicList extends Element {
+export class List extends Element {
   activeList: ListItem | undefined;
   background: Background;
   constructor(props: ElementInitProps) {
     super(props);
-    this.setClass('dynamic-list');
+    this.setClass('list');
     this.background = new Background().addClass('off').on('click', () => {
       this.backgroundOff();
       this.activeList?.removeClass('active');
