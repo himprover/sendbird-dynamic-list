@@ -1,11 +1,12 @@
 import {Element} from './Element';
 import './background.css';
 
+type BackgroundProps = 'show' | 'hidden';
 export class Background extends Element {
-  constructor() {
+  constructor(props: BackgroundProps) {
     super('div');
     this.setClass('background');
-    this.addClass('show');
+    this.addClass(props);
   }
 
   show() {

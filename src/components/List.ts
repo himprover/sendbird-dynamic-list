@@ -12,7 +12,7 @@ export class List extends Element {
   constructor(props: ListTagType) {
     super(props);
     this.setClass('list');
-    this.background = new Background().on('click', () => {
+    this.background = new Background('hidden').on('click', () => {
       this.background.hidden();
       this.activeList?.removeClass('active');
       this.activeList = undefined;

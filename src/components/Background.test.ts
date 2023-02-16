@@ -3,7 +3,7 @@ import {Background} from './Background';
 describe('[COMPONENT] Background test', () => {
   test('show method test', () => {
     //when
-    const background = new Background().setClass('hidden');
+    const background = new Background('hidden');
     expect(background.hasClass('show')).toBeFalsy();
 
     //then
@@ -12,7 +12,7 @@ describe('[COMPONENT] Background test', () => {
 
   test('hidden method test', () => {
     //when
-    const background = new Background().setClass('show');
+    const background = new Background('show');
     expect(background.hasClass('hidden')).toBeFalsy();
 
     //then
