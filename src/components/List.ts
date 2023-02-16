@@ -1,8 +1,10 @@
 import './List.css';
 
 import {Background} from './Background';
-import {Element, ElementInitProps} from './Element';
+import {Element} from './Element';
 import {ListItem} from './ListItem';
+
+type ListTagType = 'ul' | 'ol';
 
 interface ListItemProps {
   sequence: number;
@@ -12,7 +14,7 @@ interface ListItemProps {
 export class List extends Element {
   activeList: ListItem | undefined;
   background: Background;
-  constructor(props: ElementInitProps) {
+  constructor(props: ListTagType) {
     super(props);
     this.setClass('list');
     this.background = new Background().on('click', () => {

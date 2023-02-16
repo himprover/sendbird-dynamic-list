@@ -4,7 +4,7 @@ export type ElementInitProps =
   | ElementSupportTagType
   | undefined;
 
-type ElementSupportTagType = 'div' | 'ul' | 'li' | 'span';
+type ElementSupportTagType = 'div' | 'ul' | 'ol' | 'li' | 'span';
 type ElementSupportEventType =
   | 'click'
   | 'mouseover'
