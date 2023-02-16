@@ -12,6 +12,9 @@ type ElementSupportEventType =
   | 'focus'
   | 'blur';
 
+/**
+ * return this for method chaning
+ */
 export class Element {
   $: HTMLElement | undefined;
 
@@ -33,6 +36,7 @@ export class Element {
     if (this.$) {
       this.$.addEventListener(type, handler);
     }
+    return this;
   }
 
   hasClass(className: string) {
@@ -45,8 +49,8 @@ export class Element {
   setClass(...className: string[]) {
     if (this.$) {
       this.$.className = className.join(' ');
-      return;
     }
+    return this;
   }
 
   addClass(...className: string[]) {
@@ -55,6 +59,7 @@ export class Element {
         !this.$.classList.contains(name) && this.$.classList.add(name);
       }
     }
+    return this;
   }
 
   removeClass(...className: string[]) {
@@ -63,41 +68,42 @@ export class Element {
         this.$.classList.contains(name) && this.$.classList.remove(name);
       }
     }
+    return this;
   }
 
   setStyle(style: string, value: string, unit: string = '') {
     if (this.$) {
       this.$.style[style as any] = `${value}${unit}`;
     }
+    return this;
   }
 
   val(value: string) {
     if (this.$) {
       this.$.innerHTML = value;
-      return this.$.innerHTML;
     }
-    return '';
+    return this;
   }
 
   setAttr(key: string, value: string) {
     if (this.$) {
       this.$.setAttribute(key, value);
-      return this.$.getAttribute(key);
     }
-    return '';
+    return this;
   }
 
   getAttr(key: string) {
     if (this.$) {
       return this.$.getAttribute(key);
     }
-    return '';
+    return undefined;
   }
 
   removeAttr(key: string) {
     if (this.$) {
       this.$.removeAttribute(key);
     }
+    return this;
   }
 
   appendElement(element: HTMLElement | Element) {
@@ -109,24 +115,38 @@ export class Element {
       }
     }
 
-    return this.$;
+    return this;
+  }
+
+  removeElement(element: HTMLElement | Element) {
+    if (this.$) {
+      if (element instanceof HTMLElement) {
+        this.$.removeChild(element);
+      } else {
+        this.$.removeChild(element.$!);
+      }
+    }
+    return this;
   }
 
   focus() {
     if (this.$) {
       this.$.focus();
     }
+    return this;
   }
 
   blur() {
     if (this.$) {
       this.$.blur();
     }
+    return this;
   }
 
   click() {
     if (this.$) {
       this.$.click();
     }
+    return this;
   }
 }
