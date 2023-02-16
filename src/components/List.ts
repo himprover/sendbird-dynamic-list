@@ -15,8 +15,8 @@ export class List extends Element {
   constructor(props: ElementInitProps) {
     super(props);
     this.setClass('list');
-    this.background = new Background().addClass('off').on('click', () => {
-      this.backgroundOff();
+    this.background = new Background().on('click', () => {
+      this.background.hidden();
       this.activeList?.removeClass('active');
       this.activeList = undefined;
     });
@@ -47,25 +47,13 @@ export class List extends Element {
         });
         list.on('click', () => {
           list.removeClass('focus').addClass('active');
-          this.backgroundOn();
+          this.background.show();
           this.activeList = list;
         });
 
         this.appendElement(list);
       }
     }
-    return this;
-  }
-
-  backgroundOn() {
-    document.body.classList.add('no-scroll');
-    this.background.removeClass('off').addClass('on');
-    return this;
-  }
-
-  backgroundOff() {
-    document.body.classList.remove('no-scroll');
-    this.background.removeClass('on').addClass('off');
     return this;
   }
 }

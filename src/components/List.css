@@ -91,15 +91,3 @@
   width: 100%;
   flex-grow: 1;
 }
-
-/*
-About List Popup Background Style
-*/
-.list > .background.on {
-  visibility: visible;
-  cursor: pointer;
-}
-
-.list > .background.off {
-  visibility: hidden;
-}
