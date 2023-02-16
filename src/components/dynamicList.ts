@@ -1,18 +1,32 @@
-import {Element, ElementInitProps} from './element';
-import {List} from './list';
+import './dynamicList.css';
+
+import {Background} from './Background';
+import {Element, ElementInitProps} from './Element';
+import {ListItem} from './ListItem';
+
+interface ListItemProps {
+  sequence: number;
+  content: string;
+}
 
 export class DynamicList extends Element {
-  list: List[];
+  activeList: ListItem | undefined;
+  background: Background;
   constructor(props: ElementInitProps) {
     super(props);
     this.setClass('dynamic-list');
-    this.list = [];
+    this.background = new Background().addClass('off').on('click', () => {
+      this.backgroundOff();
+      this.activeList?.removeClass('active');
+      this.activeList = undefined;
+    });
+    this.appendElement(this.background);
   }
 
-  addList(content: string[]) {
+  addList(props: ListItemProps[]) {
     if (this.$) {
-      for (const item of content) {
-        const list = new List(this.list.length + 1, item, 'li');
+      for (const item of props) {
+        const list = new ListItem(item.sequence, item.content, 'li');
         list.on(
           'focus',
           () => !list.hasClass('focus') && list.addClass('focus')
@@ -23,23 +37,35 @@ export class DynamicList extends Element {
         );
         list.on(
           'mouseover',
-          () => !list.hasClass('focus') && list.addClass('focus')
+          () =>
+            !list.hasClass('focus') &&
+            !list.hasClass('active') &&
+            list.addClass('focus')
         );
         list.on('mouseout', () => {
           list.hasClass('focus') && list.removeClass('focus');
         });
-        list.on(
-          'click',
-          () => !list.hasClass('active') && list.addClass('active')
-        );
+        list.on('click', () => {
+          list.removeClass('focus').addClass('active');
+          this.backgroundOn();
+          this.activeList = list;
+        });
 
-        this.list.push(list);
         this.appendElement(list);
       }
     }
+    return this;
   }
 
-  deleteList(sequence: number) {
-    this.list = [...this.list.slice(0, sequence), ...this.list.slice(sequence)];
+  backgroundOn() {
+    document.body.classList.add('no-scroll');
+    this.background.removeClass('off').addClass('on');
+    return this;
+  }
+
+  backgroundOff() {
+    document.body.classList.remove('no-scroll');
+    this.background.removeClass('on').addClass('off');
+    return this;
   }
 }
