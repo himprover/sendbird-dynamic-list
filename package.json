@@ -9,6 +9,7 @@
     "build:dev": "webpack --mode=development",
     "build": "webpack --mode=production",
     "test": "jest test --watch",
+    "test:once": "jest test",
     "prepare": "husky install"
   },
   "repository": {
@@ -28,7 +29,9 @@
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@jest/globals": "^29.4.2",
+    "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.4.0",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",

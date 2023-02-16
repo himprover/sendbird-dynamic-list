@@ -1,18 +1,23 @@
-import {Element, ElementInitProps} from './element';
+import {Element} from './Element';
 
-export class List extends Element {
+export interface ListItemProps {
+  sequence: number;
+  content: string;
+}
+
+export class ListItem extends Element {
   sequence: number;
   content: string;
 
-  constructor(sequence: number, content: string, props: ElementInitProps) {
-    super(props);
-    this.setClass('list');
+  constructor(sequence: number, content: string) {
+    super('li');
+    this.setClass('list-item');
     this.sequence = sequence;
     this.content = content;
 
     // It's only use to style
     const container = new Element('div');
-    container.setClass('list-container');
+    container.setClass('list-item-container');
     this.appendElement(container);
 
     const sequenceText = new Element('span');

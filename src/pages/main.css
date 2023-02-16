@@ -2,3 +2,7 @@ ul,
 ol {
   list-style: none;
 }
+
+.no-scroll {
+  overflow: hidden;
+}
