@@ -1,33 +1,47 @@
+import {Component} from 'src/types/component';
 import {Element} from './Element';
+import {useState} from 'src/libs/customUI';
+import {Background} from './Background';
 
 export interface ListItemProps {
   sequence: number;
   content: string;
 }
 
-export class ListItem extends Element {
-  sequence: number;
-  content: string;
+export const ListItem: Component<ListItemProps> = props => {
+  const [isPopup, setIsPopup] = useState(false);
 
-  constructor(sequence: number, content: string) {
-    super('li');
-    this.setClass('list-item');
-    this.sequence = sequence;
-    this.content = content;
+  const Wrap = new Element('li').setClass('list-item');
+  const Container = new Element('div').setClass('list-item-container');
+  const SequenceText = new Element('span').setClass('sequence-text');
+  const ContentText = new Element('span').setClass('content-text');
 
-    // It's only use to style
-    const container = new Element('div');
-    container.setClass('list-item-container');
-    this.appendElement(container);
-
-    const sequenceText = new Element('span');
-    sequenceText.setClass('sequence-text');
-    sequenceText.val(`${sequence}`);
-    container.appendElement(sequenceText);
-
-    const contentText = new Element('span');
-    contentText.setClass('content-text');
-    contentText.val(content);
-    container.appendElement(contentText);
+  if (isPopup) {
+    Wrap.addClass('active');
+    document
+      .getElementById('root')
+      ?.appendChild(
+        Background({isShow: isPopup, setIsShow: setIsPopup}).render()
+      );
+  } else {
+    Wrap.on('mouseover', () => Wrap.addClass('focus'));
+    Wrap.on('mouseout', () => Wrap.removeClass('focus'));
+    Wrap.on('focus', () => Wrap.addClass('focus'));
+    Wrap.on('blur', () => Wrap.removeClass('focus'));
+    Wrap.on('click', () => {
+      setIsPopup(true);
+    });
+    Wrap.on(
+      'keydown',
+      (event: any) => event.key === 'Enter' && setIsPopup(true)
+    );
   }
-}
+
+  SequenceText.val(String(props.sequence));
+  ContentText.val(props.content);
+  Container.appendElement(SequenceText).appendElement(ContentText);
+  Wrap.appendElement(Container);
+  Wrap.setAttr('tabindex', '0');
+
+  return Wrap;
+};
