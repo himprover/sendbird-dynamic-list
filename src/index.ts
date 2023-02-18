@@ -1,7 +1,6 @@
-import {MainPage} from 'src/pages/main';
+import {App} from './App';
+import {render} from './libs/customUI';
 
-const Main = () => {
-  MainPage();
-};
+const root = document.getElementById('root');
 
-export default Main();
+render(root!, App);
