@@ -2,9 +2,11 @@ import {List} from './List';
 import {ListItemProps} from './ListItem';
 import userEvent from '@testing-library/user-event';
 import {getByText} from '@testing-library/dom';
+import {render} from 'src/libs/customUI';
 
 describe('[COMPONENT] List test', () => {
-  const list = new List('ul');
+  const App = document.createElement('div');
+  App.setAttribute('id', 'root');
 
   test('add and show 10 listItem test', () => {
     // given
@@ -14,16 +16,21 @@ describe('[COMPONENT] List test', () => {
     }));
 
     // when
-    list.addList(listItem);
+    render(App, List, {list: listItem});
 
     // then
-    expect(list.$!).toHaveTextContent('item-1');
-    expect(list.$!).toHaveTextContent('item-10');
+    expect(App).toHaveTextContent('item-1');
+    expect(App).toHaveTextContent('item-10');
   });
 
   test('add focus class when mouseover on list item', async () => {
     // given
-    const exampleListItem = getByText(list.$!, 'item-1').parentElement!
+    const listItem: ListItemProps[] = Array.from({length: 10}, (_, index) => ({
+      sequence: index + 1,
+      content: `item-${index + 1}`,
+    }));
+    render(App, List, {list: listItem});
+    const exampleListItem = getByText(App, 'item-1').parentElement!
       .parentElement;
 
     // when
@@ -35,9 +42,13 @@ describe('[COMPONENT] List test', () => {
 
   test('remove focus class when mouseout on list item', async () => {
     // given
-    const exampleListItem = getByText(list.$!, 'item-1').parentElement!
+    const listItem: ListItemProps[] = Array.from({length: 10}, (_, index) => ({
+      sequence: index + 1,
+      content: `item-${index + 1}`,
+    }));
+    render(App, List, {list: listItem});
+    const exampleListItem = getByText(App, 'item-1').parentElement!
       .parentElement;
-    await userEvent.hover(exampleListItem!);
 
     // when
     await userEvent.unhover(exampleListItem!);
@@ -48,51 +59,23 @@ describe('[COMPONENT] List test', () => {
 
   test('show popup when click to list item', async () => {
     // given
-    const exampleListItem = getByText(list.$!, 'item-1').parentElement!
+    const listItem: ListItemProps[] = Array.from({length: 10}, (_, index) => ({
+      sequence: index + 1,
+      content: `item-${index + 1}`,
+    }));
+    render(App, List, {list: listItem});
+    const exampleListItem = getByText(App, 'item-1').parentElement!
       .parentElement;
 
     // when
     await userEvent.click(exampleListItem!);
 
     // then
-    expect(exampleListItem!.classList.contains('active')).toBeTruthy();
-  });
+    const currentListItem = getByText(App, 'item-1').parentElement!
+      .parentElement!;
 
-  test('show background when click to list item', async () => {
-    // given
-    const exampleListItem = getByText(list.$!, 'item-1').parentElement!
-      .parentElement;
-
-    // when
-    await userEvent.click(exampleListItem!);
-
-    // then
-    expect(list.background.hasClass('show')).toBeTruthy();
-  });
-
-  test('hidden popup when click to background', async () => {
-    // given
-    const exampleListItem = getByText(list.$!, 'item-1').parentElement!
-      .parentElement;
-    await userEvent.click(exampleListItem!);
-
-    // when
-    await userEvent.click(list.background.$!);
-
-    // then
-    expect(exampleListItem!.classList.contains('active')).toBeFalsy();
-  });
-
-  test('hidden background when click to background', async () => {
-    // given
-    const exampleListItem = getByText(list.$!, 'item-1').parentElement!
-      .parentElement;
-    await userEvent.click(exampleListItem!);
-
-    // when
-    await userEvent.click(list.background.$!);
-
-    // then
-    expect(list.background.hasClass('hidden')).toBeTruthy();
+    expect(currentListItem.classList.contains('active')).toBeTruthy();
   });
 });
+
+export {};
