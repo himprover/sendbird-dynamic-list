@@ -5,9 +5,18 @@ type ElementSupportEventType =
   | 'click'
   | 'mouseover'
   | 'mouseout'
+  | 'mouseenter'
+  | 'mouseleave'
   | 'focus'
   | 'blur'
   | 'keydown';
+
+export type ElementAnimationKeyframesType =
+  | Keyframe[]
+  | PropertyIndexedKeyframes
+  | null;
+
+export type ElementAnimationOptionsType = number | KeyframeAnimationOptions;
 
 /**
  * return this for method chaning
@@ -119,5 +128,20 @@ export class Element {
 
   render() {
     return this.$;
+  }
+
+  setAnimation(
+    keyframes: ElementAnimationKeyframesType,
+    options: ElementAnimationOptionsType
+  ) {
+    this.$.animate(keyframes, options);
+    return this;
+  }
+
+  getNextSibling() {
+    return this.$.nextElementSibling;
+  }
+  getPrevSibling() {
+    return this.$.previousElementSibling;
   }
 }

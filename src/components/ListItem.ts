@@ -1,5 +1,9 @@
 import {Component} from 'src/types/component';
-import {Element} from './Element';
+import {
+  Element,
+  ElementAnimationKeyframesType,
+  ElementAnimationOptionsType,
+} from './Element';
 import {useState} from 'src/libs/customUI';
 import {Background} from './Background';
 
@@ -8,11 +12,27 @@ export interface ListItemProps {
   content: string;
 }
 
+const MOUSE_ENTER_KEYFRAMES: ElementAnimationKeyframesType = [
+  {transform: 'translateX(40px)'},
+];
+const MOUSE_ENTER_SIBLING_KEYFRAMES: ElementAnimationKeyframesType = [
+  {transform: 'translateX(20px)'},
+];
+
+const MOUSE_LEAVE_KEYFRAMES: ElementAnimationKeyframesType = [
+  {transform: 'translateX(0)'},
+];
+
+const MOUSE_EVENT_OPTIONS: ElementAnimationOptionsType = {
+  duration: 300,
+  easing: 'ease-in-out',
+  fill: 'forwards',
+};
+
 export const ListItem: Component<ListItemProps> = props => {
   const [isPopup, setIsPopup] = useState(false);
 
   const Wrap = new Element('li').setClass('list-item');
-  const Container = new Element('div').setClass('list-item-container');
   const SequenceText = new Element('span').setClass('sequence-text');
   const ContentText = new Element('span').setClass('content-text');
 
@@ -24,10 +44,12 @@ export const ListItem: Component<ListItemProps> = props => {
         Background({isShow: isPopup, setIsShow: setIsPopup}).render()
       );
   } else {
-    Wrap.on('mouseover', () => Wrap.addClass('focus'));
-    Wrap.on('mouseout', () => Wrap.removeClass('focus'));
-    Wrap.on('focus', () => Wrap.addClass('focus'));
-    Wrap.on('blur', () => Wrap.removeClass('focus'));
+    Wrap.on('mouseenter', () => mouseEnterHandler(Wrap));
+    Wrap.on('focus', () => mouseEnterHandler(Wrap));
+
+    Wrap.on('mouseleave', () => mouseLeaveHandler(Wrap));
+    Wrap.on('blur', () => mouseLeaveHandler(Wrap));
+
     Wrap.on('click', () => {
       setIsPopup(true);
     });
@@ -39,9 +61,32 @@ export const ListItem: Component<ListItemProps> = props => {
 
   SequenceText.val(String(props.sequence));
   ContentText.val(props.content);
-  Container.appendElement(SequenceText).appendElement(ContentText);
-  Wrap.appendElement(Container);
+  Wrap.appendElement(SequenceText).appendElement(ContentText);
   Wrap.setAttr('tabindex', '0');
 
   return Wrap;
+};
+
+const mouseEnterHandler = (Element: Element) => {
+  const nextSibling = Element.getNextSibling();
+  const prevSibling = Element.getPrevSibling();
+
+  Element.setAnimation(MOUSE_ENTER_KEYFRAMES, MOUSE_EVENT_OPTIONS);
+
+  nextSibling &&
+    nextSibling.animate(MOUSE_ENTER_SIBLING_KEYFRAMES, MOUSE_EVENT_OPTIONS);
+  prevSibling &&
+    prevSibling.animate(MOUSE_ENTER_SIBLING_KEYFRAMES, MOUSE_EVENT_OPTIONS);
+};
+
+const mouseLeaveHandler = (Element: Element) => {
+  const nextSibling = Element.getNextSibling();
+  const prevSibling = Element.getPrevSibling();
+
+  Element.setAnimation(MOUSE_LEAVE_KEYFRAMES, MOUSE_EVENT_OPTIONS);
+
+  nextSibling &&
+    nextSibling.animate(MOUSE_LEAVE_KEYFRAMES, MOUSE_EVENT_OPTIONS);
+  prevSibling &&
+    prevSibling.animate(MOUSE_LEAVE_KEYFRAMES, MOUSE_EVENT_OPTIONS);
 };
