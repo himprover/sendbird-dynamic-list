@@ -44,7 +44,19 @@ This project implemented to `html`, `css`, `javascript` without framework.
 
 <br />
 
-<div align="center"> [add image later] </div>
+### Main View
+
+<div align="center"><img src="https://user-images.githubusercontent.com/65651835/219986334-be85075b-a5e5-4aba-85d8-ebc1b4937f44.png" /></div>
+<br />
+
+### Hover to list item
+
+<div align="center"><img src="https://user-images.githubusercontent.com/65651835/219986366-3450ed17-5a85-48a6-b717-4798f3d33b82.png" /></div>
+<br />
+
+### Click to list item
+
+<div align="center"><img src="https://user-images.githubusercontent.com/65651835/219986392-ffb3fe5c-56e0-41db-8de0-de65a209dd9e.png" /></div>
 
 <br />
 
@@ -92,8 +104,6 @@ npm run build
 ```
 
 ### Run Production
-
-It should be preceded `build`.
 
 ```
 npm run start
