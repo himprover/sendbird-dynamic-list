@@ -1,5 +1,4 @@
 import {List} from 'src/components/List';
-import './main.css';
 import {Component} from 'src/types/component';
 import {useState} from 'src/libs/customUI';
 
