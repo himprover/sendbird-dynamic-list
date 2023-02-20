@@ -25,7 +25,10 @@ export const Background: Component<BackgroundProps> = ({isShow, setIsShow}) => {
   isShow ? changeBackgroundToShow() : changeBackgroundToHidden();
 
   Wrap.on('click', () => changeBackgroundToHidden());
-  Wrap.on('keydown', (event: any) => event.key === 'Enter' && setIsShow(false));
+  Wrap.on(
+    'keydown',
+    (event: any) => event.key === 'Enter' && changeBackgroundToHidden()
+  );
 
   return Wrap;
 };
