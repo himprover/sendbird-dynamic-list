@@ -3,8 +3,6 @@ export type ElementInitProps = Element | HTMLElement | ElementSupportTagType;
 type ElementSupportTagType = 'div' | 'ul' | 'ol' | 'li' | 'span';
 type ElementSupportEventType =
   | 'click'
-  | 'mouseover'
-  | 'mouseout'
   | 'mouseenter'
   | 'mouseleave'
   | 'focus'
@@ -18,9 +16,7 @@ export type ElementAnimationKeyframesType =
 
 export type ElementAnimationOptionsType = number | KeyframeAnimationOptions;
 
-/**
- * return this for method chaning
- */
+// return this for method chaning
 export class Element {
   private $: HTMLElement;
 
