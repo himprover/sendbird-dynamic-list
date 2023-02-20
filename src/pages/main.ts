@@ -1,18 +1,14 @@
-import './main.css';
-
 import {List} from 'src/components/List';
+import {Component} from 'src/types/component';
+import {useState} from 'src/libs/customUI';
 
-export const MainPage = () => {
-  const main = document.getElementById('root');
+const exampleData = Array.from({length: 100}, (_, index) => ({
+  sequence: index + 1,
+  content: `hello I'm ${index + 1}.`,
+}));
 
-  const dynamicList = new List('ul');
-  const exampleData = Array.from({length: 100}, (_, index) => ({
-    sequence: index + 1,
-    content: `hello I'm ${index + 1}.`,
-  }));
-  dynamicList.addList(exampleData);
+export const MainPage: Component<void> = () => {
+  const [list, _setList] = useState(exampleData);
 
-  if (dynamicList.$) {
-    main?.appendChild(dynamicList.$);
-  }
+  return List({list: list});
 };
