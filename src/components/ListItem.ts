@@ -12,23 +12,6 @@ export interface ListItemProps {
   content: string;
 }
 
-const MOUSE_ENTER_KEYFRAMES: ElementAnimationKeyframesType = [
-  {transform: 'translateX(40px)'},
-];
-const MOUSE_ENTER_SIBLING_KEYFRAMES: ElementAnimationKeyframesType = [
-  {transform: 'translateX(20px)'},
-];
-
-const MOUSE_LEAVE_KEYFRAMES: ElementAnimationKeyframesType = [
-  {transform: 'translateX(0)'},
-];
-
-const MOUSE_EVENT_OPTIONS: ElementAnimationOptionsType = {
-  duration: 300,
-  easing: 'ease-in-out',
-  fill: 'forwards',
-};
-
 export const ListItem: Component<ListItemProps> = props => {
   const [isPopup, setIsPopup] = useState(false);
 
@@ -67,26 +50,29 @@ export const ListItem: Component<ListItemProps> = props => {
   return Wrap;
 };
 
+const TRANSLATE_X_40px: ElementAnimationKeyframesType = [
+  {transform: 'translateX(40px)'},
+];
+const TRANSLATE_X_20px: ElementAnimationKeyframesType = [
+  {transform: 'translateX(20px)'},
+];
+const TRANSLATE_X_0px: ElementAnimationKeyframesType = [
+  {transform: 'translateX(0)'},
+];
+const EASEINOUT_FORWARDS_300ms: ElementAnimationOptionsType = {
+  duration: 300,
+  easing: 'ease-in-out',
+  fill: 'forwards',
+};
+
 const mouseEnterHandler = (Element: Element) => {
-  const nextSibling = Element.getNextSibling();
-  const prevSibling = Element.getPrevSibling();
-
-  Element.setAnimation(MOUSE_ENTER_KEYFRAMES, MOUSE_EVENT_OPTIONS);
-
-  nextSibling &&
-    nextSibling.animate(MOUSE_ENTER_SIBLING_KEYFRAMES, MOUSE_EVENT_OPTIONS);
-  prevSibling &&
-    prevSibling.animate(MOUSE_ENTER_SIBLING_KEYFRAMES, MOUSE_EVENT_OPTIONS);
+  Element.setAnimation(TRANSLATE_X_40px, EASEINOUT_FORWARDS_300ms)
+    .setAnimationNextSibling(TRANSLATE_X_20px, EASEINOUT_FORWARDS_300ms)
+    .setAnimationPrevSibling(TRANSLATE_X_20px, EASEINOUT_FORWARDS_300ms);
 };
 
 const mouseLeaveHandler = (Element: Element) => {
-  const nextSibling = Element.getNextSibling();
-  const prevSibling = Element.getPrevSibling();
-
-  Element.setAnimation(MOUSE_LEAVE_KEYFRAMES, MOUSE_EVENT_OPTIONS);
-
-  nextSibling &&
-    nextSibling.animate(MOUSE_LEAVE_KEYFRAMES, MOUSE_EVENT_OPTIONS);
-  prevSibling &&
-    prevSibling.animate(MOUSE_LEAVE_KEYFRAMES, MOUSE_EVENT_OPTIONS);
+  Element.setAnimation(TRANSLATE_X_0px, EASEINOUT_FORWARDS_300ms)
+    .setAnimationNextSibling(TRANSLATE_X_0px, EASEINOUT_FORWARDS_300ms)
+    .setAnimationPrevSibling(TRANSLATE_X_0px, EASEINOUT_FORWARDS_300ms);
 };
