@@ -133,11 +133,20 @@ export class Element {
     this.$.animate(keyframes, options);
     return this;
   }
-
-  getNextSibling() {
-    return this.$.nextElementSibling;
+  setAnimationNextSibling(
+    keyframes: ElementAnimationKeyframesType,
+    options: ElementAnimationOptionsType
+  ) {
+    this.$.nextElementSibling &&
+      this.$.nextElementSibling.animate(keyframes, options);
+    return this;
   }
-  getPrevSibling() {
-    return this.$.previousElementSibling;
+  setAnimationPrevSibling(
+    keyframes: ElementAnimationKeyframesType,
+    options: ElementAnimationOptionsType
+  ) {
+    this.$.nextElementSibling &&
+      this.$.nextElementSibling.animate(keyframes, options);
+    return this;
   }
 }
