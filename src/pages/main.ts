@@ -1,5 +1,5 @@
 import {List} from 'src/components/List';
-import {Component} from 'src/types/component';
+import {Component} from 'src/types';
 import {useState} from 'src/libs/customUI';
 
 const exampleData = Array.from({length: 100}, (_, index) => ({

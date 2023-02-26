@@ -1,51 +1,53 @@
-import {Component} from 'src/types/component';
+import {Component, ComponentEventProps} from 'src/types';
 import {
   Element,
   ElementAnimationKeyframesType,
   ElementAnimationOptionsType,
 } from './Element';
-import {useState} from 'src/libs/customUI';
-import {Background} from './Background';
 
-export interface ListItemProps {
+export interface ListItemType {
   sequence: number;
   content: string;
 }
 
-export const ListItem: Component<ListItemProps> = props => {
-  const [isPopup, setIsPopup] = useState(false);
+export interface ListItemProps extends ComponentEventProps {
+  item: ListItemType;
+  isActive?: boolean;
+}
 
-  const Wrap = new Element('li').setClass('list-item');
+export const ListItem: Component<ListItemProps> = props => {
+  const Wrap = new Element('li').setClass('list-item').setAttr('tabindex', '0');
   const SequenceText = new Element('span').setClass('sequence-text');
   const ContentText = new Element('span').setClass('content-text');
 
-  if (isPopup) {
+  const {
+    item,
+    isActive = false,
+    onClick: onClickHandler,
+    onKeyDown: onKeyDownHandler,
+  } = props;
+
+  if (isActive) {
     Wrap.addClass('active');
-    document
-      .getElementById('root')
-      ?.appendChild(
-        Background({isShow: isPopup, setIsShow: setIsPopup}).render()
-      );
   } else {
+    /**
+     * just animation, style
+     */
     Wrap.on('mouseenter', () => mouseEnterHandler(Wrap));
     Wrap.on('focus', () => mouseEnterHandler(Wrap));
-
     Wrap.on('mouseleave', () => mouseLeaveHandler(Wrap));
     Wrap.on('blur', () => mouseLeaveHandler(Wrap));
-
-    Wrap.on('click', () => {
-      setIsPopup(true);
-    });
-    Wrap.on(
-      'keydown',
-      (event: any) => event.key === 'Enter' && setIsPopup(true)
-    );
   }
 
-  SequenceText.val(String(props.sequence));
-  ContentText.val(props.content);
+  /**
+   * state change
+   */
+  onClickHandler && Wrap.on('click', onClickHandler);
+  onKeyDownHandler && Wrap.on('keydown', onKeyDownHandler);
+
+  SequenceText.val(`${item.sequence}`);
+  ContentText.val(item.content);
   Wrap.appendElement(SequenceText).appendElement(ContentText);
-  Wrap.setAttr('tabindex', '0');
 
   return Wrap;
 };
