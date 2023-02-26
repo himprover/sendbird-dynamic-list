@@ -34,7 +34,7 @@ export class Element {
     }
   }
 
-  on(type: ElementSupportEventType, handler: EventListener) {
+  on(type: ElementSupportEventType, handler: any) {
     this.$.addEventListener(type, handler);
     return this;
   }
@@ -89,12 +89,15 @@ export class Element {
     return this;
   }
 
-  appendElement(element: HTMLElement | Element) {
+  appendElement(element: HTMLElement | Element | null) {
+    if (element === null) return this;
+
     if (element instanceof HTMLElement) {
       this.$.appendChild(element);
     } else {
       this.$.appendChild(element.render());
     }
+
     return this;
   }
 
@@ -145,8 +148,8 @@ export class Element {
     keyframes: ElementAnimationKeyframesType,
     options: ElementAnimationOptionsType
   ) {
-    this.$.nextElementSibling &&
-      this.$.nextElementSibling.animate(keyframes, options);
+    this.$.previousElementSibling &&
+      this.$.previousElementSibling.animate(keyframes, options);
     return this;
   }
 }
