@@ -89,6 +89,24 @@ export class Element {
     return this;
   }
 
+  appendChild(element: Element | HTMLElement | null) {
+    if (Array.isArray(element)) {
+      element.forEach(value => this.appendElement(value));
+      return this;
+    }
+
+    if (element === null) {
+      return this;
+    }
+
+    this.appendElement(element);
+    return this;
+  }
+
+  /**
+   *
+   * @deprecated now use appendChild
+   */
   appendElement(element: HTMLElement | Element | null) {
     if (element === null) return this;
 
